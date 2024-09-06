@@ -9,6 +9,12 @@ import SwiftUI
 
 @Observable
 class Order {
+    
+    var name = ""
+    var streetAddress = ""
+    var city = ""
+    var zip = ""
+    
     static let types = ["Vanilla", "Strawberry", "Chocolate", "Rainbow"]
     
     var type = 0
@@ -24,4 +30,11 @@ class Order {
     }
     var extraFrosting = false
     var addSprinkles = false
+    
+    var hasValidAddress: Bool {
+        if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
+            return false
+        }
+        return true
+    }
 }
