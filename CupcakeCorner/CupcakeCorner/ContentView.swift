@@ -31,8 +31,11 @@ struct ContentView: View {
                 }
                 
                 Section {
+                    let addressView = AddressView(order: order)
                     NavigationLink("Delivery details") {
-                        AddressView(order: order)
+                        addressView.onAppear(perform: {
+                            addressView.fetchSavedValues()
+                        })
                     }
                 }
             }

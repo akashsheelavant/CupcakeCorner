@@ -22,6 +22,9 @@ struct AddressView: View {
             Section {
                 NavigationLink("Check out") {
                     CheckoutView(order: order)
+                        .onAppear(perform: {
+                            saveOrder()
+                        })
                 }
             }
             .disabled(order.hasValidAddress == false)
@@ -29,6 +32,25 @@ struct AddressView: View {
         .navigationTitle("Delivery details")
         .navigationBarTitleDisplayMode(.inline)
     }
+    
+    func saveOrder() {
+        do {
+            if let encoded = try? JSONEncoder().encode(order) {
+                UserDefaults.standard.setValue(encoded, forKey: "order")
+            }
+        }
+    }
+    
+    func fetchSavedValues() {
+        if let orderData = UserDefaults.standard.value(forKey: "order") as? Data {
+            if let decodedOrder = try? JSONDecoder().decode(Order.self, from: orderData) {
+                order.name = decodedOrder.name
+                order.streetAddress = decodedOrder.streetAddress
+                order.city = decodedOrder.city
+                order.zip = decodedOrder.zip
+            }
+        }                
+    }        
 }
 
 #Preview {
