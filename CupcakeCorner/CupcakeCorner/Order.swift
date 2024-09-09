@@ -44,7 +44,10 @@ class Order: Codable {
     var addSprinkles = false
     
     var hasValidAddress: Bool {
-        if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
+        if name.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty ||
+            streetAddress.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty ||
+            city.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty ||
+            zip.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).isEmpty {
             return false
         }
         return true
